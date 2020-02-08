@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+
+  postgres-demo:
+    image: postgres:11.5-alpine
+    volumes:
+      - ${HOST_PATH}:/home
+    environment:
+      POSTGRES_PASSWORD: Welcome
+    ports:
+      - "5555:5432"
