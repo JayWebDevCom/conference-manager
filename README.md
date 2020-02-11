@@ -22,7 +22,14 @@ $ \dt
 $ \quit
 ```
 
-- connect with jdbcurl
-```postgresql
-jdbc:postgresql://localhost:5555/conference_app
+- run the application in development mode using
+```bash
+Dspring.profiles.active=dev
 ```
+
+- for intellij configuration set the VM option
+```bash
+-Dspring.profiles.active=dev
+```
+
+- view **Springboot Conference App.postman_collection.json** in your Postman app to explore the api.

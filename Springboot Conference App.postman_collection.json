@@ -1,0 +1,308 @@
+{
+	"info": {
+		"_postman_id": "3de841d7-c0a7-4ebf-99e0-49a0a4c0366d",
+		"name": "Springboot Conference App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Session entity",
+			"item": [
+				{
+					"name": "Get sessions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/sessions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"sessions"
+							]
+						},
+						"description": "get all sessions"
+					},
+					"response": []
+				},
+				{
+					"name": "Get single session",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/sessions/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"sessions",
+								"1"
+							]
+						},
+						"description": "get a session"
+					},
+					"response": []
+				},
+				{
+					"name": "Create a session",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"session_name\": \"Test Session Name\",\n\t\"session_description\": \"Test session description\",\n\t\"session_length\": 60\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/sessions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"sessions"
+							]
+						},
+						"description": "Create a session"
+					},
+					"response": []
+				},
+				{
+					"name": "Update a session",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"session_name\": \"Test Session Name\",\n\t\"session_description\": \"Test session description\",\n\t\"session_length\": 61\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/sessions/93",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"sessions",
+								"93"
+							]
+						},
+						"description": "Create a session"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a session",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"session_name\": \"Test Session Name\",\n\t\"session_description\": \"Test session description\",\n\t\"session_length\": 61\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/sessions/93",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"sessions",
+								"93"
+							]
+						},
+						"description": "Create a session"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Speaker entity",
+			"item": [
+				{
+					"name": "Get speakers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/speakers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"speakers"
+							]
+						},
+						"description": "get all speakers"
+					},
+					"response": []
+				},
+				{
+					"name": "Get single speaker",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/speakers/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"speakers",
+								"1"
+							]
+						},
+						"description": "get a speaker"
+					},
+					"response": []
+				},
+				{
+					"name": "Create a speaker",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"TestFirst\",\n    \"last_name\": \"TestLast\",\n    \"title\": \"Mr\",\n    \"company\": \"Test Company\",\n    \"speaker_bio\": \"This is the test bio\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/speakers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"speakers"
+							]
+						},
+						"description": "get a speaker"
+					},
+					"response": []
+				},
+				{
+					"name": "Update a speaker",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"TestFirst\",\n    \"last_name\": \"TestLast\",\n    \"title\": \"Mr\",\n    \"company\": \"Test Company\",\n    \"speaker_bio\": \"This is the test bio - now updated\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/speakers/42",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"speakers",
+								"42"
+							]
+						},
+						"description": "Create a session"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a speaker",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"session_name\": \"Test Session Name\",\n\t\"session_description\": \"Test session description\",\n\t\"session_length\": 61\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/speakers/42",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"speakers",
+								"42"
+							]
+						},
+						"description": "Create a session"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
