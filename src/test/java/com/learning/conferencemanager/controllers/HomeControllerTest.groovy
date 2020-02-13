@@ -30,7 +30,7 @@ class HomeControllerTest extends Specification {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(
-                        '{"app-version": "${app.version}"}'
+                        '{"app-version": 0.0.1}'
                 ));
     }
 }
