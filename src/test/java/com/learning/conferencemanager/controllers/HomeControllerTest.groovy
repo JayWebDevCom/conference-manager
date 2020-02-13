@@ -21,7 +21,7 @@ class HomeControllerTest extends Specification {
     @Autowired
     private HomeController homeController;
 
-    def "should test"() {
+    def "should return app version"() {
         expect:
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
