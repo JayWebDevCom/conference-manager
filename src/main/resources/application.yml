@@ -11,8 +11,10 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
+  flyway:
+    enabled: true
 server:
   port: 8080
 app:
   version: 0.0.1
-debug: true
+debug: false

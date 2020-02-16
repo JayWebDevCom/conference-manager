@@ -2,10 +2,11 @@ package com.learning.conferencemanager.controllers
 
 import com.learning.conferencemanager.models.Session
 import com.learning.conferencemanager.repositories.SessionRepository
-import org.spockframework.spring.SpringBean
+import config.TestPersistenceConfiguration
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.springframework.context.annotation.Import
 import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
@@ -15,13 +16,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(SessionsController)
 @AutoConfigureMockMvc
+@Import(TestPersistenceConfiguration.class)
 class SessionsControllerTest extends Specification {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @SpringBean
-    private SessionRepository sessionRepository = Mock()
+    @Autowired
+    private SessionsController sessionsController;
+
+    @Autowired
+    private SessionRepository sessionRepository
 
     def "should get sessions"() {
         expect:

@@ -2,6 +2,7 @@ package com.learning.conferencemanager.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sun.istack.Nullable;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -23,6 +24,7 @@ public class Speaker {
     private String speaker_bio;
     @Lob
     @Type(type = "org.hibernate.type.BinaryType")
+    @Nullable
     private byte[] speaker_photo;
 
     @ManyToMany(mappedBy = "speakers")
@@ -99,6 +101,7 @@ public class Speaker {
         return speaker_photo;
     }
 
+    @Nullable
     public void setSpeaker_photo(byte[] speaker_photo) {
         this.speaker_photo = speaker_photo;
     }

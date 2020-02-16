@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 @RequestMapping("/api/v1/sessions")
 public class SessionsController {
@@ -17,7 +16,7 @@ public class SessionsController {
     private SessionRepository sessionRepository;
 
     @GetMapping
-    public List<Session> speakers() {
+    public List<Session> sessions() {
         return sessionRepository.findAll();
     }
 

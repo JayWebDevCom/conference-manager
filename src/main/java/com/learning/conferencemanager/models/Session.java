@@ -30,7 +30,7 @@ public class Session {
             @NotNull Long session_id,
             @NotNull String session_name,
             @NotNull String session_description,
-            @NotNull int session_length) {
+            @NotNull Integer session_length) {
         this.session_id = session_id;
         this.session_name = session_name;
         this.session_description = session_description;
