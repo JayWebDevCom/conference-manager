@@ -1,0 +1,12 @@
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  Clean compile test:
+    steps:
+      - name: action-maven
+        uses: comchangs/action-maven@v0.4-beta
