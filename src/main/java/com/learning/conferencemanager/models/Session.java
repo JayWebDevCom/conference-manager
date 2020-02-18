@@ -1,5 +1,6 @@
 package com.learning.conferencemanager.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class Session {
     private String session_description;
     private int session_length;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "session_speakers",

@@ -1,5 +1,7 @@
 package com.learning.conferencemanager.controllers
 
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.learning.conferencemanager.models.Session
 import com.learning.conferencemanager.repositories.SessionRepository
 import config.TestPersistenceConfiguration
@@ -8,10 +10,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.context.annotation.Import
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.web.util.NestedServletException
 import spock.lang.Specification
 
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType
+import static org.springframework.http.MediaType.APPLICATION_JSON
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @WebMvcTest(SessionsController)
@@ -23,31 +28,34 @@ class SessionsControllerTest extends Specification {
     private MockMvc mockMvc;
 
     @Autowired
-    private SessionsController sessionsController;
-
-    @Autowired
     private SessionRepository sessionRepository
 
-    def "should get sessions"() {
+    private ObjectMapper objectMapper = new ObjectMapper()
+            .setSerializationInclusion(JsonInclude.Include.NON_NULL);
+
+    def 'should get all sessions'() {
         expect:
-        mockMvc.perform(get("/api/v1/sessions"))
-                .andExpect(status().isOk());
+        mockMvc.perform(get('/api/v1/sessions'))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON));
     }
 
-    def "should get a session"() {
+    def 'should get a single session'() {
         given:
-        sessionRepository.getOne(5) >> new Session(
-                5,
-                "name",
-                "description",
-                15)
+        Session expectedSession = new Session(
+                5, 'Spring Integration Quick Start', '', 60);
 
         expect:
-        mockMvc.perform(get("/api/v1/sessions/5"))
+        mockMvc.perform(get('/api/v1/sessions/5'))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath('$.session_id').value(5))
-                .andExpect(jsonPath('$.session_name').value("name"))
-                .andExpect(jsonPath('$.session_description').value("description"))
-                .andExpect(jsonPath('$.session_length').value(15))
+                .andExpect(content().json(objectMapper.writeValueAsString(expectedSession)))
+                .andExpect(content().contentType(APPLICATION_JSON));
+    }
+
+    def 'should throw if that session does not exist'() {
+        expect:
+        assertThatExceptionOfType(NestedServletException)
+                .isThrownBy({ mockMvc.perform(get('/api/v1/sessions/0')) })
+                .withCause(new IllegalArgumentException('could not find session with id [0]'));
     }
 }

@@ -3,26 +3,32 @@ package com.learning.conferencemanager.controllers;
 import com.learning.conferencemanager.models.Session;
 import com.learning.conferencemanager.repositories.SessionRepository;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static java.lang.String.format;
+
 @RestController
 @RequestMapping("/api/v1/sessions")
 public class SessionsController {
 
-    @Autowired
     private SessionRepository sessionRepository;
+
+    public SessionsController(SessionRepository sessionRepository) {
+        this.sessionRepository = sessionRepository;
+    }
 
     @GetMapping
     public List<Session> sessions() {
         return sessionRepository.findAll();
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public Session getOne(@PathVariable Long id) {
-        return sessionRepository.getOne(id);
+        return sessionRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException(format("could not find session with id [%d]", id)));
     }
 
     @PostMapping
