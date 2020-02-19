@@ -11,6 +11,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.testcontainers.containers.PostgreSQLContainer;
+import spock.lang.AutoCleanup;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -19,10 +20,17 @@ import java.util.Properties;
 @EnableJpaRepositories(basePackages = "com.learning.conferencemanager.repositories")
 public class TestPersistenceConfiguration {
 
-    @Bean
-    public static DataSource dataSource() {
+    @AutoCleanup
+    PostgreSQLContainer postgreSQLContainer;
 
-        PostgreSQLContainer postgreSQLContainer = new PostgreSQLContainer("postgres:11.1");
+    @Bean
+    public PostgreSQLContainer postgreSQLContainer() {
+        postgreSQLContainer = new PostgreSQLContainer("postgres:11.1");
+        return postgreSQLContainer;
+    }
+
+    @Bean
+    public static DataSource dataSource(PostgreSQLContainer postgreSQLContainer) {
 
         postgreSQLContainer.start();
 
@@ -41,9 +49,9 @@ public class TestPersistenceConfiguration {
     }
 
     @Bean
-    public static LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+    public static LocalContainerEntityManagerFactoryBean entityManagerFactory(PostgreSQLContainer postgreSQLContainer) {
         LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
-        factoryBean.setDataSource(dataSource());
+        factoryBean.setDataSource(dataSource(postgreSQLContainer));
         factoryBean.setPackagesToScan("com.learning.conferencemanager.models");
         factoryBean.setJpaVendorAdapter(jpaVendorAdapter());
         factoryBean.setJpaProperties(jpaProperties());
@@ -56,9 +64,9 @@ public class TestPersistenceConfiguration {
     }
 
     @Bean(name = "transactionManager")
-    public PlatformTransactionManager dbTransactionManager() {
+    public PlatformTransactionManager dbTransactionManager(PostgreSQLContainer postgreSQLContainer) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
+        transactionManager.setEntityManagerFactory(entityManagerFactory(postgreSQLContainer).getObject());
         return transactionManager;
     }
 
