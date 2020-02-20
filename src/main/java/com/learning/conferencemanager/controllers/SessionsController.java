@@ -25,7 +25,7 @@ public class SessionsController {
         return sessionRepository.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public Session getOne(@PathVariable Long id) {
         return sessionRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException(format("could not find session with id [%d]", id)));
@@ -40,9 +40,11 @@ public class SessionsController {
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public Session put(@PathVariable Long id, @RequestBody final Session session) {
-        final Session existingSession = sessionRepository.getOne(id);
-        BeanUtils.copyProperties(session, existingSession, "session_id");
-        return sessionRepository.saveAndFlush(existingSession);
+        return sessionRepository.findById(id)
+                .map(sessionToUpdate -> {
+                    BeanUtils.copyProperties(session, sessionToUpdate, "session_id");
+                    return sessionRepository.saveAndFlush(sessionToUpdate);
+                }).orElseThrow(() -> new IllegalArgumentException(format("could not find session with id [%d]", id)));
     }
 
     @DeleteMapping("{id}")
@@ -50,6 +52,4 @@ public class SessionsController {
     public void delete(@PathVariable Long id) {
         sessionRepository.deleteById(id);
     }
-
-
 }
